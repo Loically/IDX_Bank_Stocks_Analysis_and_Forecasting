@@ -11,8 +11,6 @@ Proyek ini merupakan sebuah analisis dan proyeksi terkait dengan saham bank yang
 Dengan latar belakang tersebut, proyek ini akan bertujuan untuk menyediakan analisis tentang saham bank di IDX dan mungkin juga pendekatan kecerdasan buatan (AI) untuk meramalkan kinerja masa depan saham-saham tersebut. Proyek ini akan memberikan nilai tambah dalam pengambilan keputusan investasi dan pemahaman yang lebih baik tentang pasar saham Indonesia.
 
 ## Business Understanding
-Proyek ini dapat diarahkan dengan lebih baik untuk memenuhi kebutuhan investor serta memberikan nilai tambah yang signifikan dalam pengambilan keputusan investasi di pasar saham Indonesia.
-
 ### Problem Statements
 Masalah yang menjadi latar belakang proyek ini antara lain:
 - **Volatilitas Pasar Saham**: Pasar saham Indonesia, seperti kebanyakan pasar saham di seluruh dunia, seringkali mengalami volatilitas tinggi. Fluktuasi harga saham dapat dipengaruhi oleh berbagai faktor seperti perubahan suku bunga, kondisi ekonomi, peristiwa geopolitik, dan berita perusahaan. Pemegang saham dan investor memerlukan pemahaman yang lebih baik tentang dinamika ini untuk mengelola risiko dan peluang investasi mereka.
@@ -20,7 +18,6 @@ Masalah yang menjadi latar belakang proyek ini antara lain:
 - **Kebutuhan Investasi yang Diversifikasi**: Pemegang saham dan investor sering mencari peluang untuk diversifikasi portofolio mereka. Analisis yang kuat tentang saham bank dapat membantu mereka menentukan apakah sektor ini adalah pilihan investasi yang menarik dalam upaya diversifikasi.
 
 ### Goals
-
 Tujuan dari proyek ini antara lain:
 - **Menganalisis Kinerja Historis**: Salah satu tujuan proyek ini adalah untuk melakukan analisis menyeluruh terhadap kinerja historis saham bank yang terdaftar di IDX. Ini termasuk menganalisis data harga saham, volume perdagangan, dan indikator kinerja lainnya selama beberapa periode waktu.
 - **Mengidentifikasi Tren dan Pola**: Proyek ini akan bertujuan untuk mengidentifikasi tren dan pola dalam kinerja saham bank. Ini termasuk pengenalan tren jangka pendek dan jangka panjang, serta pola pergerakan harga yang mungkin ada.
@@ -30,8 +27,11 @@ Tujuan dari proyek ini antara lain:
 - **Menginformasikan Keputusan Investasi**: Tujuan akhir dari proyek ini adalah memberikan informasi yang berharga kepada pemegang saham dan investor sehingga mereka dapat membuat keputusan investasi yang lebih terinformasi dan dapat mengelola portofolio mereka dengan lebih efektif.
 Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
 
+### Solution Statements:
+Masalah dan tujuan yang telah diuraikan diatas dapat diselesaikan dengan pendekatan Machine Learning untuk melakukan _forecasting_ pergerakan harga saham. Salah satu model yang bisa melakukan hal tersebut adalah model LSTM (Long-Short Term Memory) sebagai baseline model.
+
 ## Data Understanding
-Dataset yang digunakan adalah data pergerakan harga saham dari TOP 5 saham Bank yang termasuk dalam Bursa Efek Indonesia (IDX). Dataset tersebut didapatkan dari situs [Yahoo! Finance](https://finance.yahoo.com/) dengan menggunakan [Yahoo! Finance API](https://pypi.org/project/yfinance/).
+Dataset yang digunakan adalah data pergerakan harga saham dari TOP 5 saham Bank yang termasuk dalam Bursa Efek Indonesia (IDX). Dataset tersebut didapatkan dari situs [Yahoo! Finance](https://finance.yahoo.com/) dengan menggunakan [Yahoo! Finance API](https://pypi.org/project/yfinance/). Dalam Analysis, data yang digunakan yaitu data dalam 3 tahun terakhir dengan jumlah data 729 data per emiten bank. Dengan total 5 emiten bank yang dianalisis sehingga jumlah data untuk analisis adalah sebanyak 3645 data. Sedangkan untuk _forecasting_, data yang digunakan adalah data emiten saham BBCA dengan total data maksimal yang bisa didapatkan dari dari situs Yahoo! Finance yaitu sejak 08 Juni 2004 hingga kini (10 September 2023) dengan jumlah data sebanyak 4773 data
 
 ### Variabel-variabel pada dataset adalah sebagai berikut:
 - **Open**       : Harga saham saat market dibuka di pagi hari
@@ -60,6 +60,11 @@ Base Model Machine Learning yang digunakan pada proyek ini adalah LSTM (Long-Sho
 pada model ini menggunakan optimizers [**Adam**](https://keras.io/api/optimizers/adam/) dan loss function [**Huber**](https://www.tensorflow.org/api_docs/python/tf/keras/losses/Huber). Proses pelatihan model ini berlangsung selama 15 epochs, di mana satu epoch adalah satu kali proses pelatihan menggunakan seluruh dataset. Batch size sebesar 1 berarti model akan diperbarui setiap kali satu sampel data diberikan, yang sering disebut sebagai stochastic gradient descent (SGD) mini-batch dengan ukuran batch sebesar 1.
 
 ## Evaluation
+![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/9c351c9d-4fa2-4f33-ae60-8effd5620d50)
+
 Proses evaluasi yang dilakukan adalah dengan menggunakan metriks MAE (Mean Absolute Error) dan melakukan visualisasi terhadap hasil prediksi yang dihasilakn oleh model terhadap data test. Mean Absolute Error (MAE) adalah metrik evaluasi yang mengukur rata-rata kesalahan absolut antara prediksi model dan nilai sebenarnya dalam data. MAE menghasilkan skor kesalahan non-negatif, dan semakin kecil nilai MAE, semakin baik model dalam memprediksi nilai target. MAE sederhana, tahan terhadap outliers, dan mudah diinterpretasikan. Formula untuk menghitung nilai MAE adalah sebagai berikut:
 
-![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/9c351c9d-4fa2-4f33-ae60-8effd5620d50)
+![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/f73712db-6cbc-4abb-8157-d2c5ef475cef)
+
+Hasil prediksi model divisualisasikan seperti pada gambar di atas. Terlihat bahwa pada data test model bisa dikatan cukup baik dalam memprediksikan harga saham dengan MAE pada prediksi sebesar 159.977 dari nilai maksimal 9400 (1.7018%)
+
