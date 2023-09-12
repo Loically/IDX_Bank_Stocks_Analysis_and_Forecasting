@@ -1,4 +1,4 @@
-# Laporan Proyek Machine Learning - Fajar Zulkautsari Muhammad
+# IDX Bank Stock's Analysis and Forecasting - Fajar Zulkautsari Muhammad
 
 ## Domain Proyek
 Dalam beberapa tahun terakhir, Indonesia telah mencatat pertumbuhan ekonomi yang stabil, yang memberikan dukungan fundamental bagi sektor bisnis dan perusahaan yang terdaftar di bursa saham. Tren investasi juga mengalami perubahan[[1]](https://journal3.uin-alauddin.ac.id/index.php/Iqtisaduna/article/view/20214). Peran regulasi dalam meningkatkan transparansi dan keamanan pasar saham juga menjadi faktor penting. Selain itu, dampak pandemi COVID-19 tidak dapat diabaikan[[2]](https://journal.ipb.ac.id/index.php/jmo/article/view/32657), menghadirkan volatilitas dan liquiditas yang tinggi[[3]](https://ejournal.unisnu.ac.id/JDEB/article/view/20) dan memaksa pasar untuk beradaptasi dengan perubahan kondisi ekonomi yang cepat. Akhirnya, meningkatnya perhatian investor global terhadap saham-saham Indonesia telah menciptakan dinamika tambahan dalam pasar saham domestik. Pemahaman yang mendalam tentang semua faktor ini adalah kunci dalam mengambil keputusan investasi yang cerdas dan berinformasi.
