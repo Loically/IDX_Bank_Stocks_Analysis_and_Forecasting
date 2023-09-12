@@ -62,17 +62,46 @@ $$
 - **Validasi Data**: Validasi data melibatkan pemeriksaan akhir untuk memastikan bahwa data sudah siap digunakan. Ini termasuk memastikan tidak ada masalah yang belum teratasi dan bahwa data memiliki format yang sesuai seperti data shape, dsb.
 
 ## Modeling
-_Base Model Machine Learning_ yang digunakan pada proyek ini adalah LSTM _(Long-Short Term Memory)_. LSTM cocok untuk proyek analisis dan peramalan saham karena mampu menangani data deret waktu harga saham dengan kemampuan memahami pola dan tren jangka panjang, mengingat informasi penting dari masa lalu, dan memproses data besar dengan fleksibilitas. LSTM juga dapat memodelkan pola kompleks, volatilitas harga saham, dan dapat berintegrasi dengan data tambahan seperti berita keuangan untuk meningkatkan kemampuan _forecasting_. pada model ini menggunakan optimizers [**Adam**](https://keras.io/api/optimizers/adam/) dan loss function [**Huber**](https://www.tensorflow.org/api_docs/python/tf/keras/losses/Huber). 
+_Base Model Machine Learning_ yang digunakan pada proyek ini adalah LSTM _(Long-Short Term Memory)_. LSTM cocok untuk proyek analisis dan peramalan saham karena mampu menangani data deret waktu harga saham dengan kemampuan memahami pola dan tren jangka panjang, mengingat informasi penting dari masa lalu, dan memproses data besar dengan fleksibilitas. LSTM juga dapat memodelkan pola kompleks, volatilitas harga saham, dan dapat berintegrasi dengan data tambahan seperti berita keuangan untuk meningkatkan kemampuan _forecasting_. 
 
-Optimizer Adam dipilih karena memiliki kemampuan untuk mengadaptasi _Learning Rate_. _Learning rate_ adalah pengatur kecepatan pembelajaran model selama pelatihan. Ini menentukan seberapa besar langkah yang diambil dalam arah yang mengurangi nilai _loss function_. _Learning rate_ yang lebih besar akan menghasilkan langkah yang lebih besar, sementara _learning rate_ yang lebih kecil akan menghasilkan langkah yang lebih kecil. Harga saham dapat mengalami fluktuasi yang signifikan dari waktu ke waktu. Optimizer Adam dengan kemampuannya untuk mengadaptasi learning rate secara dinamis membantu model beradaptasi dengan fluktuasi ini. selain itu juga Adam cukup efisien dalam hal konvergensi. Ini adalah hal yang positif karena model perlu cepat menyesuaikan diri dengan perubahan dalam data harga saham yang dapat terjadi dalam jangka waktu yang singkat.
+Infrastruktur dari model ini menggunakan 2 lapisan LSTM, 2 _Hidden layer_ dan sebuah _output layer_ dengan rincian sebagai berikut : 
+**1. Lapisan LSTM Pertama (LSTM):**
+Output Shape: (None, 50, 128)
+Jumlah Parameter: 66,560
+Lapisan LSTM pertama memiliki 128 unit neuron. Ini adalah lapisan sekuensial yang mengambil input dalam bentuk sekuens data dengan panjang 50 (sesuai dengan windowed_data) dan menghasilkan output sekuensial. Output ini akan menjadi input untuk lapisan LSTM berikutnya.
+
+**2. Lapisan LSTM Kedua (LSTM_1):**
+Output Shape: (None, 64)
+Jumlah Parameter: 49,408
+Lapisan LSTM kedua memiliki 64 unit neuron. Ini adalah lapisan LSTM yang mengambil output sekuensial dari lapisan sebelumnya dan menghasilkan keluaran yang tidak sekuensial, tetapi berdimensi 64.
+
+**3. Lapisan Dense Pertama (Dense):**
+Output Shape: (None, 10)
+Jumlah Parameter: 650
+Fungsi Aktivasi: ReLU
+Lapisan ini adalah lapisan tersembunyi pertama dengan 10 unit neuron dan fungsi aktivasi ReLU. Lapisan ini bertanggung jawab untuk menggabungkan dan mengolah informasi dari lapisan LSTM sebelumnya.
+
+**4. Lapisan Dense Kedua (Dense_1):**
+Output Shape: (None, 5)
+Jumlah Parameter: 55
+Fungsi Aktivasi: ReLU
+Lapisan ini adalah lapisan tersembunyi kedua dengan 5 unit neuron dan fungsi aktivasi ReLU. Lapisan ini membantu model dalam memahami pola yang lebih kompleks dalam data.
+
+**5. Lapisan Output (Dense_2):**
+Output Shape: (None, 1)
+Jumlah Parameter: 6
+Lapisan ini adalah lapisan output dengan 1 unit neuron tanpa fungsi aktivasi tertentu. Lapisan ini menghasilkan prediksi harga saham.
+Total parameter dalam model ini adalah 116,679, dan semua parameter ini dapat disesuaikan selama proses pelatihan. Model ini dirancang untuk memahami pola sekuensial dalam data harga saham dan menghasilkan prediksi yang akurat.
+
+Pada model ini menggunakan optimizers [**Adam**](https://keras.io/api/optimizers/adam/) dan loss function [**Huber**](https://www.tensorflow.org/api_docs/python/tf/keras/losses/Huber). Optimizer Adam dipilih karena memiliki kemampuan untuk mengadaptasi _Learning Rate_. _Learning rate_ adalah pengatur kecepatan pembelajaran model selama pelatihan. Ini menentukan seberapa besar langkah yang diambil dalam arah yang mengurangi nilai _loss function_. _Learning rate_ yang lebih besar akan menghasilkan langkah yang lebih besar, sementara _learning rate_ yang lebih kecil akan menghasilkan langkah yang lebih kecil. Harga saham dapat mengalami fluktuasi yang signifikan dari waktu ke waktu. Optimizer Adam dengan kemampuannya untuk mengadaptasi learning rate secara dinamis membantu model beradaptasi dengan fluktuasi ini. selain itu juga Adam cukup efisien dalam hal konvergensi. Ini adalah hal yang positif karena model perlu cepat menyesuaikan diri dengan perubahan dalam data harga saham yang dapat terjadi dalam jangka waktu yang singkat.
 
 Sedangkan _loss function_ Huber dipilih karena data harga saham seringkali rentan terhadap peristiwa eksternal atau berita yang dapat menghasilkan outlier. Fungsi kerugian Huber, yang merupakan kombinasi antara _Mean Absolute Error_ (MAE) dan _Mean Squared Error_ (MSE), lebih toleran terhadap outlier daripada MSE. Ini memungkinkan model untuk tidak terlalu dipengaruhi oleh peristiwa yang tidak biasa atau anomali dalam data harga saham. 
 
-Proses pelatihan model ini menggunakan metode GSD _(Graduate Student Descent)_ untuk mencari secara manual _Hyperparameter_ yang mendapatkan hasil terbaik. Sehingga didapatkan _Learning Rate_ 1e-4, berlangsung selama 15 _epochs_, dan _batch size_ sebesar 4. Di mana satu _epoch_ adalah satu kali proses pelatihan menggunakan seluruh dataset. _Batch size_ sebesar 4 berarti model akan diperbarui setiap 4 kali sampel data diberikan. 
+Proses pelatihan model ini menggunakan metode GSD _(Graduate Student Descent)_ untuk mencari secara manual _Hyperparameter_ yang mendapatkan hasil terbaik. Sehingga didapatkan _Learning Rate_ 1e-3, berlangsung selama 15 _epochs_, dan _batch size_ sebesar 5. Di mana satu _epoch_ adalah satu kali proses pelatihan menggunakan seluruh dataset. _Batch size_ sebesar 5 berarti model akan diperbarui setiap 5 kali sampel data diberikan. 
 
-![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/ed8e6dc8-9962-412f-9d3d-93421652dfda)
+![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/4d384d4b-802b-4561-b449-56d85c35db39)
 
-Hasil pelatihan model dengan _hyperparameter_ tersebut mendapatkan hasil yang cukup baik dengan MAE 0.0042 atau hanya sebesar 0.42%.
+Dilihat dari grafik histori pelatihan, MAE yang didapatkan cenderung mengalami penurunan yang artinya model semakin baik. Hasil pelatihan model dengan _hyperparameter_ tersebut mendapatkan hasil yang cukup baik dengan MAE 0.0043 atau hanya sebesar 0.43% dan _train loss_ sebesar 1.7753e-05.
 
 ## Evaluation
 Proses evaluasi yang dilakukan adalah dengan menggunakan metriks MAE dan melakukan visualisasi terhadap hasil prediksi yang dihasilkan oleh model terhadap data test. MAE adalah metrik evaluasi yang mengukur rata-rata kesalahan absolut antara prediksi model dan nilai sebenarnya dalam data. MAE menghasilkan skor kesalahan non-negatif, dan semakin kecil nilai MAE, semakin baik model dalam memprediksi nilai target. Formula MAE dapat diilustrasikan sebagai berikut :
@@ -87,8 +116,9 @@ Dimana:
 - $y_i$ adalah nilai sebenarnya dari sampel ke-i.
 - $hat{y}_i$ adalah nilai perkiraan dari sampel ke-i.
 
-![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/e34656f5-6072-49cb-acc7-67a7c782e376)
-Hasil prediksi model divisualisasikan seperti pada gambar di atas. Terlihat bahwa pada data test, prediksi yang dihasilkan model cukup berhimpit dengan nilai sebenarnya. Sehingga model dikatakan cukup baik dalam memprediksikan harga saham dengan MAE pada prediksi sebesar 117.888 dari nilai maksimum 9400 (1.254%). 
+![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/640399e1-ebc1-4e70-8fcb-df40b26303f8)
+
+Hasil prediksi model divisualisasikan seperti pada gambar di atas. Terlihat bahwa pada data test, prediksi yang dihasilkan model (garis hijau) cukup berhimpit dengan nilai sebenarnya (garis kuning). Sehingga model dikatakan cukup baik dalam memprediksikan harga saham dengan MAE pada prediksi sebesar 86.902 dari nilai maksimum 9400 (0.9244%). 
 
 Dengan hasil ini, diharapkan model bisa membantu investor untuk membuat keputusan strategi investasi yang lebih baik. Seperti contohnya trader bisa melakukan trading jangka pendek/menengah dengan cara pembelian saat prediksi model berada dibawah atau harga saham sedang mengalami koreksi dan saat sedang berada dipuncak (sebelum koreksi kembali). Dan juga untuk investor yg bisa membeli pada saat harga sedang koreksi atau turun. 
 
