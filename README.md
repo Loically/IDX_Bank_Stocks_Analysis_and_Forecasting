@@ -1,6 +1,6 @@
 # IDX Bank Stock's Analysis and Forecasting - Fajar Zulkautsari Muhammad
 
-## Domain Proyek
+## Project Domain
 In recent years, Indonesia has had consistent economic development, which has provided critical support to the business sector and publicly traded enterprises. Trends in investment have also shifted[[1]](https://journal3.uin-alauddin.ac.id/index.php/Iqtisaduna/article/view/20214). The function of regulation in increasing stock market transparency and safety is also critical. Furthermore, the COVID-19 epidemic cannot be overlooked[[2]](https://journal.ipb.ac.id/index.php/jmo/article/view/32657), which brings significant volatility and liquidity[[3]](https://ejournal.unisnu.ac.id/JDEB/article/view/20) and pressuring markets to adjust to rapidly changing economic conditions. Finally, increased worldwide investor interest in Indonesian equities has produced new dynamics in the domestic stock market. A thorough awareness of all of these elements is essential for making sound and informed investing decisions.
 
 Stock price forecasting is particularly significant in investment decision making in current digital age[[4]](https://ieeexplore.ieee.org/abstract/document/9350582). To find investment possibilities and manage risks, investors, stock traders, and financial institutions rely on rigorous analysis and precise forecasts. To construct a strong and trustworthy stock price forecasting model, this project will use artificial intelligence, especially Long Short-Term Memory (LSTM).
