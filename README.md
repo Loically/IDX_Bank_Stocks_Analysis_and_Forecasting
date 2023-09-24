@@ -1,125 +1,128 @@
 # IDX Bank Stock's Analysis and Forecasting - Fajar Zulkautsari Muhammad
 
 ## Domain Proyek
-Dalam beberapa tahun terakhir, Indonesia telah mencatat pertumbuhan ekonomi yang stabil, yang memberikan dukungan fundamental bagi sektor bisnis dan perusahaan yang terdaftar di bursa saham. Tren investasi juga mengalami perubahan[[1]](https://journal3.uin-alauddin.ac.id/index.php/Iqtisaduna/article/view/20214). Peran regulasi dalam meningkatkan transparansi dan keamanan pasar saham juga menjadi faktor penting. Selain itu, dampak pandemi COVID-19 tidak dapat diabaikan[[2]](https://journal.ipb.ac.id/index.php/jmo/article/view/32657), menghadirkan volatilitas dan liquiditas yang tinggi[[3]](https://ejournal.unisnu.ac.id/JDEB/article/view/20) dan memaksa pasar untuk beradaptasi dengan perubahan kondisi ekonomi yang cepat. Akhirnya, meningkatnya perhatian investor global terhadap saham-saham Indonesia telah menciptakan dinamika tambahan dalam pasar saham domestik. Pemahaman yang mendalam tentang semua faktor ini adalah kunci dalam mengambil keputusan investasi yang cerdas dan berinformasi.
+In recent years, Indonesia has had consistent economic development, which has provided critical support to the business sector and publicly traded enterprises. Trends in investment have also shifted[[1]](https://journal3.uin-alauddin.ac.id/index.php/Iqtisaduna/article/view/20214). The function of regulation in increasing stock market transparency and safety is also critical. Furthermore, the COVID-19 epidemic cannot be overlooked[[2]](https://journal.ipb.ac.id/index.php/jmo/article/view/32657), which brings significant volatility and liquidity[[3]](https://ejournal.unisnu.ac.id/JDEB/article/view/20) and pressuring markets to adjust to rapidly changing economic conditions. Finally, increased worldwide investor interest in Indonesian equities has produced new dynamics in the domestic stock market. A thorough awareness of all of these elements is essential for making sound and informed investing decisions.
 
-Dalam era digital ini, peramalan harga saham memiliki peran yang sangat penting dalam pengambilan keputusan investasi[[4]](https://ieeexplore.ieee.org/abstract/document/9350582). Para investor, pedagang saham, dan institusi keuangan bergantung pada analisis yang cermat dan peramalan yang akurat untuk mengidentifikasi peluang investasi dan mengelola risiko. Dalam proyek ini akan memanfaatkan kecerdasan buatan, khususnya _Long Short-Term Memory_ (LSTM), untuk mengembangkan model peramalan harga saham yang kuat dan andal.
+Stock price forecasting is particularly significant in investment decision making in current digital age[[4]](https://ieeexplore.ieee.org/abstract/document/9350582). To find investment possibilities and manage risks, investors, stock traders, and financial institutions rely on rigorous analysis and precise forecasts. To construct a strong and trustworthy stock price forecasting model, this project will use artificial intelligence, especially Long Short-Term Memory (LSTM).
 
-Proyek ini bertujuan untuk merinci dan menganalisis proses peramalan harga saham berdasarkan data historis, faktor-faktor pasar, dan tren yang relevan. Dalam latar belakang yang berfokus pada sektor perbankan, kita akan menggali peran bank dalam ekonomi dan pentingnya memahami perilaku harga saham bank. Lalu, dengan pemahaman yang mendalam tentang masalah bisnis, kita akan merumuskan tujuan proyek dan menciptakan kerangka kerja untuk mengatasi tantangan peramalan harga saham.
+The goal of this research is to describe and assess the stock price forecasting process using historical data, market conditions, and pertinent trends. We will examine the function of banks in the economy and the significance of understanding the behavior of bank stock prices in the context of a banking backdrop. Then, having gained a thorough understanding of the business problem, we will develop project objectives and a framework to solve the problems of stock price forecasting.
 
 ## Business Understanding
 ### Problem Statements
-Masalah yang menjadi latar belakang proyek ini antara lain:
-- Bagaimana analisis terhadap harga saham sektor perbankan?
-- Bagaimana strategi investasi yang tepat pada saham sektor perbankan?
+The following issues are at the heart of this project: 
+- How is the share price of the banking industry analyzed?
+- What is the best investment strategy for banking stocks?
 
 ### Goals
-Tujuan dari proyek ini antara lain:
-- Mengimplementasikan Exploratory Data Analysis (EDA) untuk mengetahui performa saham di sektor perbankan.
-- Melakukan prediksi harga saham yang dapat digunakan sebagai acuan dalam membuat keputusan strategi investasi.
+The objectives of this project include:
+- Implement Exploratory Data Analysis (EDA) to determine the performance of stocks in the banking sector.
+- Perform stock price predictions that can be used as a reference in making investment strategy decisions.
 
 ### Solution Statements:
-Masalah dan tujuan yang telah diuraikan diatas dapat diselesaikan dengan pendekatan Machine Learning untuk melakukan _forecasting_ pergerakan harga saham. Salah satu model yang bisa melakukan hal tersebut adalah model LSTM _(Long-Short Term Memory)_ sebagai baseline model.
+The problems and objectives described above can be solved with a Machine Learning approach for forecasting stock price movements. One of the models that can do this is the LSTM model _(Long-Short Term Memory)_ as a baseline model.
 
 ## Data Understanding
-Dataset yang digunakan adalah data pergerakan harga saham dari TOP 5 saham Bank yang termasuk dalam Bursa Efek Indonesia (IDX). Dataset tersebut didapatkan dari situs [Yahoo! Finance](https://finance.yahoo.com/) dengan menggunakan [Yahoo! Finance API](https://pypi.org/project/yfinance/). Dalam Analisis, data yang digunakan yaitu data dalam 3 tahun terakhir dengan jumlah data 729 data per emiten bank. Dengan total 5 emiten bank yang dianalisis sehingga jumlah data untuk analisis adalah sebanyak 3645 data. Sedangkan untuk _forecasting_, data yang digunakan adalah data emiten saham BBCA dengan total data maksimal yang bisa didapatkan dari dari situs Yahoo! Finance yaitu sejak 08 Juni 2004 hingga kini (10 September 2023) dengan jumlah data sebanyak 4773 data.
+The dataset used is the stock price movement data of the TOP 5 Bank stocks included in the Indonesia Stock Exchange (IDX). The dataset is obtained from the [Yahoo! Finance](https://finance.yahoo.com/) site using the [Yahoo! Finance API](https://pypi.org/project/yfinance/). In the analysis, the data used is data in the last 3 years with a total of 729 data per bank issuer. With a total of 5 bank issuers being analyzed, the total data for analysis is 3645 data. As for _forecasting_, the data used is BBCA stock issuer data with the maximum total data that can be obtained from the Yahoo! Finance site, which is from June 08, 2004 to the present (September 10, 2023) with a total of 4773 data.
 
 ### Variabel-variabel pada dataset adalah sebagai berikut:
-- **Open**       : Harga saham saat market dibuka di pagi hari
-- **High**       : Titik harga saham tertinggi yang dicapai pada hari yang sama
-- **Low**        : Titik harga saham terendah yang dicapai pada hari yang sama
-- **Close**      : Harga saham saat market ditutup di sore hari
-- **Adj Close**  : Harga saham saat market ditutup yang telah disesuaikan (misal ada _stock split_, dsb)
-- **Volume**     : Jumlah volume transaksi saham yang terjadi pada hari yang sama
+- **Open**      : Share price when the market opens in the morning
+- **High**      : The highest share price point reached on the same day
+- **Low**       : The lowest share price point reached on the same day
+- **Close**     : Share price when the market closes in the afternoon
+- **Adj Close** : Adjusted stock price at market close (e.g. stock split, etc.)
+- **Volume**    : Total volume of stock transactions that occurred on the same day
 
-_Exploratory Data Analysis_ (EDA) dan visualisasi dilakukan untuk mendapatkan informasi yang mendalam tentang perbandingan harga saham di sektor bank. EDA dan visualisasi dilakukan untuk mendapatkan informasi mengenai pergerakan harga saham dan volume transaksi harian dan juga dilihat dari _daily return_ dan tingkat resiko dari masing-masing bank.
+To get detailed information on stock price comparisons in the banking industry, exploratory data analysis (EDA) and visualization were used. EDA and visualization were used to gather data on stock price fluctuations and daily transaction volume, as well as each bank's daily return and risk level.
+
 ![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/007b9f10-0b16-4dde-92b2-cb124bd21284)
 
-Jika dilihat dari pola pergerakan harga saham di atas, BBCA, BBNI dan BBRI memiliki pola _uptrend_ yang cukup baik. Sebenarnya, BMRI juga memiliki pola _uptrend_ tapi terdapat lonjakan di tahun 2023 yang bisa dikatan terjadi pergerakan harga yang anomali. di sisi lain, BRIS mengalami _uptrend_ sampai 2021 dan kemudian _downtrend_ dan _sideways_.
+According to the stock price movement pattern shown above, BBCA, BBNI, and BBRI are in an uptrend. Actually, BMRI has an upward pattern as well, although there is a spike in 2023 that might be considered an abnormal price movement. BRIS, on the other hand, saw an upswing until 2021, followed by a downturn and sideways movement.
 
 ![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/79984cfb-64b3-4911-b68d-0d6f463bbb29)
 
-Selain itu, Korelasi antar harga emiten ditinjau untuk mendapatkan emiten yang memiliki pengaruh terhadap emiten bank lainnya. Jika ditinjau dari _heatmap_ di atas, dapat dikatakan bahwa tidak ada korelasi yang sangat signifikan dalam hal _return_ saham harian. Namun, pada harga saham, 4 dari 5 bank memiliki korelasi yang sangat signifikan, hanya BRIS yang tidak memiliki korelasi dengan semua bank.
+Furthermore, the connection between issuer prices is examined in order to identify issuers who have an impact on other bank issuers. According to the heatmap above, there is no extremely significant association between daily stock returns. However, four out of five banks have a very substantial link in terms of share price; only BRIS does not have a correlation with all banks.
 
-Salah satu cara untuk mengetahui potensi risiko adalah dengan membandingkan rata-rata return harian dengan standar deviasi. Rata-rata _return_ harian merupakan representasi dari nilai ekspektasi keuntungan yang diperoleh dan standar deviasi merupakan sebaran dari keuntungan yang mungkin diperoleh. Semakin besar standar deviasi, maka semakin besar pula potensi risikonya.
+One method for determining possible risk is to compare the average daily return to the standard deviation. The average daily return represents the expected value of profit produced, while the standard deviation represents the dispersion of profit that may be achieved. The higher the standard deviation, the larger the danger.
+
 ![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/8958489b-6079-46db-a897-087f90ffb927)
 
-Terlihat bahwa BBCA memiliki potensi risiko paling rendah yaitu sekitar 1%. Diikuti oleh BBRI dan BBNI yang juga memiliki potensi risiko yang cukup rendah yaitu sekitar 1,7%. Kemudian, ada BRIS dengan 3,5% dan yang paling berisiko adalah BMRI dengan potensi risiko 4,5%.
-Berdasarkan hasil analisis, emiten bank yang memiliki performa yg cukup stabil dan potensi resiko yg paling rendah adalah **BBCA**.
+BBCA has the lowest possible danger, which is roughly 1%. Following that are BBRI and BBNI, both of which have a relatively modest potential risk of roughly 1.7%. Then there's BRIS, which has a risk of 3.5%, and BMRI, which has a risk of 4.5%.
+According to the findings of the investigation, **BBCA** is the bank issuer with the most consistent performance and the lowest potential risk.
 
 ## Data Preparation 
-_Data preparation_ (persiapan data) adalah tahap kritis dalam proyek analisis dan peramalan saham seperti pada proyek ini. Dalam tahap ini, data mentah dikumpulkan, dimuat, dibersihkan, dan diubah menjadi bentuk yang dapat digunakan untuk analisis dan pemodelan. Berikut penjelasan lebih lanjut tentang data preparation dalam proyek ini:
-- **Pengumpulan Data**: Tahap pertama adalah mengumpulkan data yang diperlukan untuk analisis. Data bersumber dari situs [Yahoo! Finance](https://finance.yahoo.com/) dengan menggunakan Yahoo! Finance API.
-- **Transformasi Data**: Beberapa teknik transformasi data dilakukan untuk mendapatkan informasi yang tidak disediakan oleh dataset secara langsung. Seperti untuk mendapatkan nilai _'Daily Return'_ yang menjelaskan tentang persen untung/rugi emiten tersebut dalam sehari. _'Daily Return'_ didapatkan dengan cara mencari selisih (dalam bentuk persentase) dari harga _'close'_ pada hari ini dengan harga _'close'_ pada hari sebelumnya. Nilai ini bisa didapatkan dengan menggunakan fungsi dari _library_ Pandas, yaitu [pct_change()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pct_change.html)
-- **Pemisahan Data**: Data biasanya dibagi menjadi dua bagian, yaitu data pelatihan _(training data)_ dan data pengujian _(testing data)_. Data pelatihan digunakan untuk melatih model peramalan, sedangkan data pengujian digunakan untuk menguji kinerja model. Karena data yang digunakan merupakan _Time Series_ yang sangat bergantung para urutan tanggal, data ini dipisah dengan cara dipotong dengan proposi 80% data awal sebagai data latih dan 20% data terakhir sebagai data latih.
-- **Normalisasi dan Standarisasi**: Karena data yang digunakan mungkin memiliki rentang nilai yang berbeda, normalisasi atau standarisasi diperlukan. Normalisasi yang digunakan adalah [_MinMaxScaler()_](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html). _MinMaxScaler_ akan mengubah interval data menjadi range antara 0 sampai dengan 1. Hal ini bertujuan untuk memastikan bahwa atribut data memiliki skala yang beragam. _MinMaxScaler_ digunakan karena cocok untuk melakukan normalisasi terhadap data harga yang tidak mungkin ada nilai negatif. Range harga saham yang berkisar antara 729 - 9400 akan dinormalisasi menjadi range 0 - 1.
+Data preparation is a critical stage in stock analysis and forecasting projects such as this one. In this stage, raw data is collected, loaded, cleaned, and converted into a form that can be used for analysis and modeling. Here is a further explanation of data preparation in this project:
+- **Data Collection**: The first stage is to collect the data required for analysis. The data is sourced from the [Yahoo! Finance](https://finance.yahoo.com/) using the Yahoo! Finance API.
+- Data Transformation**: Some data transformation techniques are performed to obtain information that is not provided by the dataset directly. For example, to get the value of _'Daily Return'_ which describes the percent profit/loss of the issuer in a day. The _'Daily Return'_ is obtained by finding the difference (in percentage form) of the _'close'_ price on this day with the _'close'_ price on the previous day. This value can be obtained by using a function from the Pandas _library_, namely [pct_change()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pct_change.html)
+- **Split Data**: Data is usually divided into two parts, namely training data and testing data. The training data is used to train the forecasting model, while the testing data is used to test the performance of the model. Since the data used is a time series that is highly dependent on the date sequence, this data is split by cutting with a proportion of 80% of the initial data as training data and 20% of the last data as training data.
+- **Normalization and Standardization**: Since the data used may have different value ranges, normalization or standardization is required. The normalization used is [_MinMaxScaler()_](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html). The _MinMaxScaler_ will convert the data interval into a range between 0 and 1. It aims to ensure that the data attributes have a wide range of scales. MinMaxScaler_ is used because it is suitable for normalizing price data that cannot have negative values. The stock price range that ranges from 729 - 9400 will be normalized to a range of 0 - 1.
 
 $$
 X_{\text{scaled}} = \frac{X - X_{\text{min}}}{X_{\text{max}} - X_{\text{min}}}
 $$
 
-- **_Windowing_ Data**: Tujuan utama _windowing_ data adalah untuk membagi data deret waktu menjadi segmen yang lebih kecil, sehingga memungkinkan analisis dan pemodelan yang lebih efektif. Dengan membagi data menjadi jendela waktu, data akan dipisah untuk dijadikan atribut dan label. Window size yang dipakai pada data adalah 50 data (50 hari) dengan lag 1 data (1 hari).
-- **Validasi Data**: Validasi data melibatkan pemeriksaan akhir untuk memastikan bahwa data sudah siap digunakan. Ini termasuk memastikan tidak ada masalah yang belum teratasi dan bahwa data memiliki format yang sesuai seperti data shape, dsb.
+- **_Windowing_ Data**: The main purpose of _windowing_ data is to divide time series data into smaller segments, allowing for more effective analysis and modeling. By dividing the data into time windows, the data will be separated into attributes and labels. The window size used in the data is 50 data (50 days) with a lag of 1 data (1 day).
+- **Data Validation**: Data validation involves a final check to ensure that the data is ready for use. This includes ensuring there are no outstanding issues and that the data has the appropriate format such as data shape, etc.
 
 ## Modeling
-_Base Model Machine Learning_ yang digunakan pada proyek ini adalah LSTM _(Long-Short Term Memory)_. LSTM cocok untuk proyek analisis dan peramalan saham karena mampu menangani data deret waktu harga saham dengan kemampuan memahami pola dan tren jangka panjang, mengingat informasi penting dari masa lalu, dan memproses data besar dengan fleksibilitas. LSTM juga dapat memodelkan pola kompleks, volatilitas harga saham, dan dapat berintegrasi dengan data tambahan seperti berita keuangan untuk meningkatkan kemampuan _forecasting_. 
+The base machine learning model used in this project is LSTM (Long-Short Term Memory). LSTM is suitable for stock analysis and forecasting projects because it can handle stock price time series data with the ability to understand long-term patterns and trends, remember important information from the past, and process large data with flexibility. LSTM can also model complex patterns, stock price volatility, and can integrate with additional data such as financial news to enhance forecasting capabilities. 
 
-Infrastruktur dari model ini menggunakan 2 lapisan LSTM, 2 _Hidden layer_ dan sebuah _output layer_ dengan rincian sebagai berikut : 
-**1. Lapisan LSTM Pertama (LSTM):**
+The infrastructure of this model uses 2 LSTM layers, 2 hidden layers and an output layer with the following details: 
+
+**1. First LSTM Layer (LSTM):**
 Output Shape: (None, 50, 128)
-Jumlah Parameter: 66,560
-Lapisan LSTM pertama memiliki 128 unit neuron. Ini adalah lapisan sekuensial yang mengambil input dalam bentuk sekuens data dengan panjang 50 (sesuai dengan windowed_data) dan menghasilkan output sekuensial. Output ini akan menjadi input untuk lapisan LSTM berikutnya.
+Number of Parameters: 66,560
+The first LSTM layer has 128 neuron units. It is a sequential layer that takes inputs in the form of data sequences of length 50 (corresponding to windowed_data) and produces sequential outputs. This output will be the input for the next LSTM layer.
 
-**2. Lapisan LSTM Kedua (LSTM_1):**
+**2. Second LSTM Layer (LSTM_1):**
 Output Shape: (None, 64)
-Jumlah Parameter: 49,408
-Lapisan LSTM kedua memiliki 64 unit neuron. Ini adalah lapisan LSTM yang mengambil output sekuensial dari lapisan sebelumnya dan menghasilkan keluaran yang tidak sekuensial, tetapi berdimensi 64.
+Number of Parameters: 49,408
+The second LSTM layer has 64 neuron units. It is an LSTM layer that takes the sequential output of the previous layer and produces an output that is not sequential, but 64-dimensional.
 
-**3. Lapisan Dense Pertama (Dense):**
+**3. First Dense Layer (Dense):**
 Output Shape: (None, 10)
-Jumlah Parameter: 650
-Fungsi Aktivasi: ReLU
-Lapisan ini adalah lapisan tersembunyi pertama dengan 10 unit neuron dan fungsi aktivasi ReLU. Lapisan ini bertanggung jawab untuk menggabungkan dan mengolah informasi dari lapisan LSTM sebelumnya.
+Number of Parameters: 650
+Activation Function: ReLU
+This layer is the first hidden layer with 10 neuron units and ReLU activation function. This layer is responsible for combining and processing information from the previous LSTM layer.
 
-**4. Lapisan Dense Kedua (Dense_1):**
+**4. Second Dense Layer (Dense_1):**
 Output Shape: (None, 5)
-Jumlah Parameter: 55
-Fungsi Aktivasi: ReLU
-Lapisan ini adalah lapisan tersembunyi kedua dengan 5 unit neuron dan fungsi aktivasi ReLU. Lapisan ini membantu model dalam memahami pola yang lebih kompleks dalam data.
+Number of Parameters: 55
+Activation Function: ReLU
+This layer is the second hidden layer with 5 neuron units and ReLU activation function. This layer helps the model in understanding more complex patterns in the data.
 
-**5. Lapisan Output (Dense_2):**
+**5. Output Layer (Dense_2):**
 Output Shape: (None, 1)
-Jumlah Parameter: 6
-Lapisan ini adalah lapisan output dengan 1 unit neuron tanpa fungsi aktivasi tertentu. Lapisan ini menghasilkan prediksi harga saham.
-Total parameter dalam model ini adalah 116,679, dan semua parameter ini dapat disesuaikan selama proses pelatihan. Model ini dirancang untuk memahami pola sekuensial dalam data harga saham dan menghasilkan prediksi yang akurat.
+Number of Parameters: 6
+This layer is an output layer with 1 neuron unit with no specific activation function. This layer generates stock price predictions.
+The total parameters in this model are 116,679, and all these parameters can be adjusted during the training process. The model is designed to understand sequential patterns in stock price data and generate accurate predictions.
 
-Pada model ini menggunakan optimizers [**Adam**](https://keras.io/api/optimizers/adam/) dan loss function [**Huber**](https://www.tensorflow.org/api_docs/python/tf/keras/losses/Huber). Optimizer Adam dipilih karena memiliki kemampuan untuk mengadaptasi _Learning Rate_. _Learning rate_ adalah pengatur kecepatan pembelajaran model selama pelatihan. Ini menentukan seberapa besar langkah yang diambil dalam arah yang mengurangi nilai _loss function_. _Learning rate_ yang lebih besar akan menghasilkan langkah yang lebih besar, sementara _learning rate_ yang lebih kecil akan menghasilkan langkah yang lebih kecil. Harga saham dapat mengalami fluktuasi yang signifikan dari waktu ke waktu. Optimizer Adam dengan kemampuannya untuk mengadaptasi learning rate secara dinamis membantu model beradaptasi dengan fluktuasi ini. selain itu juga Adam cukup efisien dalam hal konvergensi. Ini adalah hal yang positif karena model perlu cepat menyesuaikan diri dengan perubahan dalam data harga saham yang dapat terjadi dalam jangka waktu yang singkat.
+This model uses [**Adam**](https://keras.io/api/optimizers/adam/) optimizers and [**Huber**](https://www.tensorflow.org/api_docs/python/tf/keras/losses/Huber) loss functions. Adam's optimizer was chosen because it has the ability to adapt the learning rate. The learning rate is the speed at which the model learns during training. It determines how large a step is taken in the direction that reduces the value of the loss function. A larger learning rate will result in larger steps, while a smaller learning rate will result in smaller steps. Stock prices can experience significant fluctuations over time. Adam's optimizer with its ability to dynamically adapt the learning rate helps the model adapt to these fluctuations. It is also quite efficient in terms of convergence. This is a positive thing because the model needs to quickly adjust to changes in stock price data that can occur in a short period of time.
 
-Sedangkan _loss function_ Huber dipilih karena data harga saham seringkali rentan terhadap peristiwa eksternal atau berita yang dapat menghasilkan outlier. Fungsi kerugian Huber, yang merupakan kombinasi antara _Mean Absolute Error_ (MAE) dan _Mean Squared Error_ (MSE), lebih toleran terhadap outlier daripada MSE. Ini memungkinkan model untuk tidak terlalu dipengaruhi oleh peristiwa yang tidak biasa atau anomali dalam data harga saham. 
+Meanwhile, Huber's loss function was chosen because stock price data is often susceptible to external events or news that can produce outliers. Huber's loss function, which is a combination of Mean Absolute Error (MAE) and Mean Squared Error (MSE), is more tolerant of outliers than MSE. This allows the model to be less affected by unusual events or anomalies in the stock price data. 
 
-Proses pelatihan model ini menggunakan metode GSD _(Graduate Student Descent)_ untuk mencari secara manual _Hyperparameter_ yang mendapatkan hasil terbaik. Sehingga didapatkan _Learning Rate_ 1e-3, berlangsung selama 15 _epochs_, dan _batch size_ sebesar 5. Di mana satu _epoch_ adalah satu kali proses pelatihan menggunakan seluruh dataset. _Batch size_ sebesar 5 berarti model akan diperbarui setiap 5 kali sampel data diberikan. 
+The training process of this model uses the GSD (Graduate Student Descent) method to manually search for the hyperparameters that get the best results. This resulted in a learning rate of 1e-3, 15 epochs, and a batch size of 5. Where one epoch is one training process using the entire dataset. A batch size of 5 means that the model will be updated every 5 times a data sample is given. 
 
 ![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/4d384d4b-802b-4561-b449-56d85c35db39)
 
-Dilihat dari grafik histori pelatihan, MAE yang didapatkan cenderung mengalami penurunan yang artinya model semakin baik. Hasil pelatihan model dengan _hyperparameter_ tersebut mendapatkan hasil yang cukup baik dengan MAE 0.0043 atau hanya sebesar 0.43% dan _train loss_ sebesar 1.7753e-05.
+According to the training history graph, the MAE obtained tends to decrease, indicating that the model is improving. The results of training the model using the hyperparameter are rather satisfactory, with MAE 0.0043, or 0.43%, and a training loss of 1.7753e-05.
 
 ## Evaluation
-Proses evaluasi yang dilakukan adalah dengan menggunakan metriks MAE dan melakukan visualisasi terhadap hasil prediksi yang dihasilkan oleh model terhadap data test. MAE adalah metrik evaluasi yang mengukur rata-rata kesalahan absolut antara prediksi model dan nilai sebenarnya dalam data. MAE menghasilkan skor kesalahan non-negatif, dan semakin kecil nilai MAE, semakin baik model dalam memprediksi nilai target. Formula MAE dapat diilustrasikan sebagai berikut :
+The MAE measure is used in the assessment process, and the prediction results generated by the model are shown against the test data. The average absolute error between the model's forecast and the real value in the data is measured by MAE. MAE generates a non-negative error score; the lower the MAE number, the better the model predicts the target value. The MAE formula is presented below:
 
 $$
 MAE = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
 $$
 
-Dimana:
-- $MAE$ adalah Mean Absolute Error.
-- $n$ adalah jumlah sampel.
-- $y_i$ adalah nilai sebenarnya dari sampel ke-i.
-- $hat{y}_i$ adalah nilai perkiraan dari sampel ke-i.
+Where:
+- $MAE$ is the Mean Absolute Error.
+- $n$ is the number of samples.
+- $y_i$ is the true value of the i-th sample.
+- $hat{y}_i$ is the estimated value of the i-th sample.
 
 ![image](https://github.com/Loically/IDX_Bank_Stocks_Analysis_and_Forecasting/assets/114181235/640399e1-ebc1-4e70-8fcb-df40b26303f8)
 
-Hasil prediksi model divisualisasikan seperti pada gambar di atas. Terlihat bahwa pada data test, prediksi yang dihasilkan model (garis hijau) cukup berhimpit dengan nilai sebenarnya (garis kuning). Sehingga model dikatakan cukup baik dalam memprediksikan harga saham dengan MAE pada prediksi sebesar 86.902 dari nilai maksimum 9400 (0.9244%). 
+The above graphic depicts the model forecast results. The predictions provided by the model (green line) are pretty close to the actual value (yellow line) in the test data. As a result, the model is claimed to be pretty good at forecasting stock values, with an MAE of 86.902 from a high of 9400 (0.9244%). 
 
-Dengan hasil ini, diharapkan model bisa membantu investor untuk membuat keputusan strategi investasi yang lebih baik. Seperti contohnya trader bisa melakukan trading jangka pendek/menengah dengan cara pembelian saat prediksi model berada dibawah atau harga saham sedang mengalami koreksi dan saat sedang berada dipuncak (sebelum koreksi kembali). Dan juga untuk investor yg bisa membeli pada saat harga sedang koreksi atau turun. 
+With these findings, it is believed that the model would be able to assist investors in making better investment plan selections. For example, traders can engage in short/medium-term trading by purchasing when the model forecast is lower or the stock price is undergoing a correction and selling when it reaches its top (before the correction returns). Also for investors who know when to purchase.
 
 
